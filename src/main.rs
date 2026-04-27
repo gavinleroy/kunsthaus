@@ -10,6 +10,7 @@ mod paintings;
 mod sdf_text;
 mod shader;
 mod touch;
+mod typography;
 
 fn main() {
     let mut app = App::new();
