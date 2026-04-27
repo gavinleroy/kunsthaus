@@ -42,6 +42,7 @@
 
         kunsthaus = craneLib.buildTrunkPackage (commonArgs // {
           inherit cargoArtifacts;
+          wasm-bindgen-cli = pkgs.wasm-bindgen-cli_0_2_118;
           trunkIndexPath = "index.html";
           trunkExtraBuildArgs = "--public-url .";
           nativeBuildInputs = with pkgs; [
