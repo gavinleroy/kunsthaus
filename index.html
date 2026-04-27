@@ -1,6 +1,48 @@
-<html>
-  <head>
-    <link data-trunk rel="scss" href="index.scss" />
-    <link data-trunk rel="copy-dir" href="assets" />
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kunsthaus</title>
+  <link data-trunk rel="scss" href="index.scss" />
+  <link data-trunk rel="copy-dir" href="assets" />
+</head>
+<body>
+  <div id="loading">
+    <div class="loading-inner">
+      <span class="loading-title">Kunsthaus</span>
+      <div class="loading-bar">
+        <div class="loading-bar-fill"></div>
+      </div>
+      <span class="loading-hint">Loading gallery&hellip;</span>
+    </div>
+  </div>
+  <div id="overlay">
+    <span class="overlay-text">Tap to enter</span>
+    <span class="overlay-hint"></span>
+  </div>
+  <script>
+    const observer = new MutationObserver(() => {
+      if (document.querySelector('canvas')) {
+        observer.disconnect();
+        setTimeout(() => {
+          document.getElementById('loading').style.display = 'none';
+          const overlay = document.getElementById('overlay');
+          const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+          const hint = overlay.querySelector('.overlay-hint');
+          if (isTouch) {
+            hint.textContent = 'Drag to look \u2022 Two fingers to move';
+          } else {
+            overlay.querySelector('.overlay-text').textContent = 'Click to enter';
+            hint.textContent = 'WASD to move \u2022 Mouse to look';
+          }
+          overlay.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+          }, { once: true });
+        }, 300);
+      }
+    });
+    observer.observe(document.body, { childList: true });
+  </script>
+</body>
 </html>

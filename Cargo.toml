@@ -1,10 +1,10 @@
 [package]
-name = "shader-gallery"
+name = "kunsthaus"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies.bevy]
-version = "0.9"
+version = "0.18.1"
 default-features = false
 features = [
   "bevy_asset",
@@ -14,18 +14,38 @@ features = [
   "bevy_pbr",
   "bevy_gltf",
   "bevy_render",
+  "bevy_state",
+  "reflect_auto_register",
   "png",
-  "jpeg"
+  "jpeg",
 ]
 
+# Enable webgl directly on sub-crates to avoid bevy_internal/webgl
+# pulling in bevy_dev_tools (which requires unpublished bevy_picking 0.18)
+[dependencies.bevy_render]
+version = "0.18"
+features = ["webgl"]
+
+[dependencies.bevy_core_pipeline]
+version = "0.18"
+features = ["webgl"]
+
+[dependencies.bevy_pbr]
+version = "0.18"
+features = ["webgl"]
+
 [dependencies]
-smooth-bevy-cameras = "0.7"
-bevy-inspector-egui = "0.17"
-bevy_mod_fbx = "0.3"
-take_mut = "0.2"
+bevy_flycam = "0.18"
+ab_glyph = "0.2.32"
+rustybuzz = "0.20.1"
+hyphenation = { version = "0.8.4", features = ["embed_en-us"] }
 
 [profile.dev]
 opt-level = 1
 
 [profile.dev.package."*"]
 opt-level = 3
+
+[profile.release]
+opt-level = "z"
+lto = "thin"
